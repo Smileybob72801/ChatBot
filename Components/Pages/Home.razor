@@ -7,12 +7,22 @@
 		<div class="lastInput">Lorem ipsum odor amet, consectetuer adipiscing elit.</div>
 		<div class="response">Lorem ipsum odor amet, consectetuer adipiscing elit.</div>
 	</div>
-	<div class="inputBox"></div>
+	<div class="inputBox">
+		<input @bind="message" />
+		<button @onclick="SubmitInput">Submit</button>
+	</div>
 </div>
 
 @code
 {
+	public string? message;
+
 	protected override async Task OnInitializedAsync()
 	{
+	}
+
+	public async Task SubmitInput()
+	{
+		
 	}
 }
