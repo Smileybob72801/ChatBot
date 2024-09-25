@@ -4,12 +4,13 @@ using Microsoft.Extensions.Http;
 using System.Runtime.CompilerServices;
 using System.Net.Http.Json;
 using Microsoft.Extensions.Configuration.EnvironmentVariables;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ChatBot.Services
 {
 	public interface IApiReaderService
 	{
-		Task<string> ReadAsync(string userMesage, string languageModel);
+		Task<string?> GetChatResponseAsync(string userMesage, string languageModel);
 	}
 	public class ApiReaderService : IApiReaderService
 	{
@@ -28,7 +29,7 @@ namespace ChatBot.Services
 
 			_client.DefaultRequestHeaders.Add("Authorization", $"Bearer {_apiKey}");
 		}
-        public async Task<string> ReadAsync(string userMessage, string languageModel)
+        public async Task<string?> GetChatResponseAsync(string userMessage, string languageModel)
 		{
 			var requestBody = new
 			{
@@ -39,7 +40,36 @@ namespace ChatBot.Services
 				model = languageModel,
 			};
 
+			HttpResponseMessage response = await _client.PostAsJsonAsync(
+				"v1/chat", requestBody);
 
+			response.EnsureSuccessStatusCode();
+
+			ResponseModel? result = await response.Content.ReadFromJsonAsync<ResponseModel>();
+
+			if (result is null ||
+				result.Choices is null ||
+				result.Choices.Count == 0)
+			{
+				throw new InvalidOperationException("No response from API.");
+			}
+
+			return result.Choices.First().Message?.Content;
 		}
+	}
+
+	public class ResponseModel
+	{
+		public List<Choice>? Choices { get; set; }
+	}
+
+	public class Choice
+	{
+		public Message? Message { get; set; }
+	}
+
+	public class Message
+	{
+		public string? Content { get; set; }
 	}
 }
