@@ -24,10 +24,11 @@ namespace ChatBot.Services
 				BaseAddress = new Uri("https://api.groqcloud.com/")
 			};
 
-			_apiKey = Environment.GetEnvironmentVariable("GROQ_API_KEY") ??
+			_apiKey = Environment.GetEnvironmentVariable("GROQ_API_KEY", EnvironmentVariableTarget.User) ??
 				throw new InvalidOperationException("API key not found.");
 
 			_client.DefaultRequestHeaders.Add("Authorization", $"Bearer {_apiKey}");
+			_client.DefaultRequestHeaders.Add("Content-Type", "application/json");
 		}
         public async Task<string?> GetChatResponseAsync(string userMessage, string languageModel)
 		{
@@ -35,13 +36,17 @@ namespace ChatBot.Services
 			{
 				messages = new[]
 				{
-					new { role = "user", content = userMessage }
+					new 
+					{
+						role = "user",
+						content = userMessage
+					}
 				},
 				model = languageModel,
 			};
 
 			HttpResponseMessage response = await _client.PostAsJsonAsync(
-				"v1/chat", requestBody);
+				"/openai/v1/chat/completions", requestBody);
 
 			response.EnsureSuccessStatusCode();
 

@@ -1,6 +1,8 @@
 ﻿@page "/"
 @inject ChatBot.Services.IApiReaderService ApiReaderService
 
+@using System.Diagnostics;
+
 <PageTitle>ChatBot</PageTitle>
 
 <div class="mainContainer">
@@ -13,21 +15,30 @@
 	</div>
 	<div class="inputBox">
 		<input @bind="userMessage" placeholder="Type your message..." />
-		<button @onclick="SubmitInput">Submit</button>
+	</div>
+	<div>
+		<button type="button" @onclick="SubmitInput">Submit</button>
 	</div>
 </div>
 
 @code
 {
 	public string? userMessage;
-	private List<ChatMessage> _messages = [];
+	private List<ChatMessage> _messages = new();
 
-	protected override async Task OnInitializedAsync()
+	protected override async void OnInitialized()
 	{
+		Console.WriteLine("Component initialized");
+
+		await SubmitInput();
 	}
 
 	public async Task SubmitInput()
 	{
+		userMessage = "Test Message";
+
+		Console.WriteLine("SubmitInput called");
+
 		if (!string.IsNullOrWhiteSpace(userMessage))
 		{
 			ChatMessage newMessage = new()
@@ -35,9 +46,12 @@
 				UserMessage = userMessage
 			};
 
-			// TODO update with proper api details
+			Console.WriteLine($"User message: {userMessage}");
+			
 			string? apiResponse = await ApiReaderService.GetChatResponseAsync(
-				userMessage, "mixtral-8x7b-32768");
+				userMessage, "llama-3.1-70b-versatile");
+
+			Console.WriteLine($"API response: {apiResponse}");
 
 			newMessage.ApiResponse = apiResponse;
 
@@ -46,6 +60,8 @@
 			userMessage = string.Empty;
 
 			StateHasChanged();
+
+			Console.WriteLine("Submit finished");
 		}
 	}
 
