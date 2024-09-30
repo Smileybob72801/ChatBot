@@ -72,11 +72,11 @@
 		}
 	}
 
-	public void HandleKeyPress(KeyboardEventArgs e)
+	public async Task HandleKeyPress(KeyboardEventArgs e)
 	{
 		if (e.Key == "Enter")
 		{
-			Console.WriteLine("Enter pressed");
+			await SubmitInput();
 		}
 	}
 
