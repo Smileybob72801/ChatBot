@@ -1,4 +1,5 @@
 ﻿@page "/"
+@rendermode InteractiveServer
 @inject ChatBot.Services.IApiReaderService ApiReaderService
 
 @using System.Diagnostics;
@@ -14,29 +15,25 @@
 		}
 	</div>
 	<div class="inputBox">
-		<input @bind="userMessage" placeholder="Type your message..." />
+		<input 
+			@bind="userMessage"
+			placeholder="Type your message..."
+			@onkeypress="HandleKeyPress" />
 	</div>
 	<div>
-		<button type="button" @onclick="SubmitInput">Submit</button>
+		<button @onclick="SubmitInput">Submit</button>
+		<button @onclick="TestButton">Test</button>
 	</div>
 </div>
+
 
 @code
 {
 	public string? userMessage;
 	private List<ChatMessage> _messages = new();
 
-	protected override async void OnInitialized()
-	{
-		Console.WriteLine("Component initialized");
-
-		await SubmitInput();
-	}
-
 	public async Task SubmitInput()
 	{
-		userMessage = "Test Message";
-
 		Console.WriteLine("SubmitInput called");
 
 		if (!string.IsNullOrWhiteSpace(userMessage))
@@ -47,9 +44,20 @@
 			};
 
 			Console.WriteLine($"User message: {userMessage}");
-			
-			string? apiResponse = await ApiReaderService.GetChatResponseAsync(
+
+			string? apiResponse;
+
+			try
+			{
+				apiResponse = await ApiReaderService.GetChatResponseAsync(
 				userMessage, "llama-3.1-70b-versatile");
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine($"Api call failed: {ex.Message}");
+				throw;
+			}
+
 
 			Console.WriteLine($"API response: {apiResponse}");
 
@@ -63,6 +71,19 @@
 
 			Console.WriteLine("Submit finished");
 		}
+	}
+
+	public void HandleKeyPress(KeyboardEventArgs e)
+	{
+		if (e.Key == "Enter")
+		{
+			Console.WriteLine("Enter pressed");
+		}
+	}
+
+	public void TestButton()
+	{
+		Console.WriteLine("Test button pressed!");
 	}
 
 	public class ChatMessage

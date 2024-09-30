@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Components\Empty.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Test\" />
     <Folder Include="wwwroot\NewFolder\" />
   </ItemGroup>
