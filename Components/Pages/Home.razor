@@ -18,8 +18,7 @@
 	<div class="inputBox">
 		<input 
 			@bind="userMessage"
-			placeholder="Type your message..."
-			@onkeypress="HandleKeyPress" />
+			placeholder="Type your message..." />
 	</div>
 	<div>
 		<button @onclick="SubmitInput">Submit</button>
@@ -65,14 +64,6 @@
 			userMessage = string.Empty;
 
 			StateHasChanged();
-		}
-	}
-
-	public async Task HandleKeyPress(KeyboardEventArgs e)
-	{
-		if (e.Key == "Enter")
-		{
-			await SubmitInput();
 		}
 	}
 
