@@ -21,14 +21,13 @@ namespace ChatBot.Services
         {
 			_client = new HttpClient()
 			{
-				BaseAddress = new Uri("https://api.groqcloud.com/")
+				BaseAddress = new Uri("https://api.groq.com/")
 			};
 
 			_apiKey = Environment.GetEnvironmentVariable("GROQ_API_KEY", EnvironmentVariableTarget.User) ??
 				throw new InvalidOperationException("API key not found.");
 
 			_client.DefaultRequestHeaders.Add("Authorization", $"Bearer {_apiKey}");
-			_client.DefaultRequestHeaders.Add("Content-Type", "application/json");
 		}
         public async Task<string?> GetChatResponseAsync(string userMessage, string languageModel)
 		{
