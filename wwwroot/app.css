@@ -50,7 +50,7 @@ h1:focus {
     border-color: #929292;
 }
 
-.mainContainer{
+.mainContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -60,15 +60,13 @@ h1:focus {
 }
 
 .messages{
-    height: 800px;
     border: 1px solid black;
-    height: 80vh;
+    height: 100%;
     width: 50%;
     padding: 10px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    overflow-y: auto;
+    overflow-y: scroll;
 }
 
 .lastInput{

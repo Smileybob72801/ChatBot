@@ -1,6 +1,7 @@
 ﻿@page "/"
 @rendermode InteractiveServer
 @inject ChatBot.Services.IApiReaderService ApiReaderService
+@inject IJSRuntime JS;
 
 @using System.Diagnostics;
 
@@ -33,7 +34,9 @@
 
 	public async Task SubmitInput()
 	{
-		Console.WriteLine("SubmitInput called");
+
+		string instruction = "You are Neil deGrasse Tyson, an astrophysicist known for your engaging and insightful explanations. Please respond to the following input in character: ";
+		string messageWithInstruction = instruction + userMessage;
 
 		if (!string.IsNullOrWhiteSpace(userMessage))
 		{
@@ -42,23 +45,18 @@
 				UserMessage = userMessage
 			};
 
-			Console.WriteLine($"User message: {userMessage}");
-
 			string? apiResponse;
 
 			try
 			{
 				apiResponse = await ApiReaderService.GetChatResponseAsync(
-				userMessage, "llama-3.1-70b-versatile");
+				messageWithInstruction, "llama-3.1-70b-versatile");
 			}
 			catch (Exception ex)
 			{
 				Console.WriteLine($"Api call failed: {ex.Message}");
 				throw;
 			}
-
-
-			Console.WriteLine($"API response: {apiResponse}");
 
 			newMessage.ApiResponse = apiResponse;
 
@@ -67,8 +65,6 @@
 			userMessage = string.Empty;
 
 			StateHasChanged();
-
-			Console.WriteLine("Submit finished");
 		}
 	}
 
