@@ -1,21 +1,26 @@
 ﻿@page "/"
+@inject ChatBot.Services.IApiReaderService ApiReaderService
 
 <PageTitle>ChatBot</PageTitle>
 
 <div class="mainContainer">
 	<div class="messages">
-		<div class="lastInput">Lorem ipsum odor amet, consectetuer adipiscing elit.</div>
-		<div class="response">Lorem ipsum odor amet, consectetuer adipiscing elit.</div>
+		@foreach(ChatMessage message in _messages)
+		{
+			<div class="lastInput">@message.UserMessage</div>
+			<div class="response">@message.ApiResponse</div>
+		}
 	</div>
 	<div class="inputBox">
-		<input @bind="message" />
+		<input @bind="userMessage" placeholder="Type your message..." />
 		<button @onclick="SubmitInput">Submit</button>
 	</div>
 </div>
 
 @code
 {
-	public string? message;
+	public string? userMessage;
+	private List<ChatMessage> _messages = [];
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -23,6 +28,30 @@
 
 	public async Task SubmitInput()
 	{
-		
+		if (!string.IsNullOrWhiteSpace(userMessage))
+		{
+			ChatMessage newMessage = new()
+			{
+				UserMessage = userMessage
+			};
+
+			// TODO update with proper api details
+			string? apiResponse = await ApiReaderService.GetChatResponseAsync(
+				userMessage, "mixtral-8x7b-32768");
+
+			newMessage.ApiResponse = apiResponse;
+
+			_messages.Add(newMessage);
+
+			userMessage = string.Empty;
+
+			StateHasChanged();
+		}
+	}
+
+	public class ChatMessage
+	{
+		public string? UserMessage { get; set; } = string.Empty;
+		public string? ApiResponse { get; set; } = string.Empty;
 	}
 }

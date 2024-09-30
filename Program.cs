@@ -1,4 +1,5 @@
 using ChatBot.Components;
+using ChatBot.Services;
 
 namespace ChatBot
 {
@@ -12,6 +13,8 @@ namespace ChatBot
 			builder.Services.AddRazorComponents()
 				.AddInteractiveServerComponents();
 
+			builder.Services.AddSingleton<IApiReaderService, ApiReaderService>();
+
 			var app = builder.Build();
 
 			// Configure the HTTP request pipeline.
@@ -22,7 +25,7 @@ namespace ChatBot
 				app.UseHsts();
 			}
 
-			app.UseHttpsRedirection();
+			//app.UseHttpsRedirection();
 
 			app.UseStaticFiles();
 			app.UseAntiforgery();
