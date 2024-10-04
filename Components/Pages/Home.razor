@@ -15,11 +15,9 @@
 			<div class="response">@message.ApiResponse</div>
 		}
 	</div>
-	<div class="inputBox">
-		<input 
-			@bind="userMessage"
-			placeholder="Type your message..." />
-	</div>
+	<textarea @bind="userMessage"
+			  rows="4" cols="60"
+			  placeholder="Type your message..." />
 	<div>
 		<button @onclick="SubmitInput">Submit</button>
 	</div>
