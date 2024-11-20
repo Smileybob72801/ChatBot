@@ -23,7 +23,7 @@
 1. **User Input:** Users type their messages into the text area and press "Submit."
 2. **AI Model Selection:** The app sends the user's message to the API, prefixed with an instruction to roleplay Neil deGrasse Tyson.
 3. **API Communication:** A request is made to the Groq API using `ApiReaderService` to retrieve a response.
-4. **Display Response:** The chatbot's reply is displayed under the user's input.
+4. **Display Response:** The user request and the chatbot's completion is displayed similar to a text conversation.
 
 ## Getting Started
 
