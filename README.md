@@ -2,7 +2,7 @@
 
 **ChatBot** is a web-based application that simulates engaging conversations with Neil deGrasse Tyson, the renowned astrophysicist. Using advanced AI models, the chatbot provides insightful, in-character responses to user inputs.
 
-[![ChatBot Screenshot](https://github.com/Smileybob72801/WeatherBlazor/blob/master/WeatherBlazor/Screenshots/WeatherBlazorForecast.png?raw=true)](https://github.com/Smileybob72801/WeatherBlazor/blob/master/WeatherBlazor/Screenshots/WeatherBlazorForecast.png?raw=true)
+[![ChatBot Screenshot](https://raw.githubusercontent.com/Smileybob72801/ChatBot/refs/heads/master/Screenshot.png)
 
 ## Features
 
