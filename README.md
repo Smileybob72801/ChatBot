@@ -2,10 +2,12 @@
 
 **ChatBot** is a web-based application that simulates engaging conversations with Neil deGrasse Tyson, the renowned astrophysicist. Using advanced AI models, the chatbot provides insightful, in-character responses to user inputs.
 
+![ChatBot Screenshot](screenshot.png)
+
 ## Features
 
 - 🌌 **Immersive Interaction:** Speak to a virtual Neil deGrasse Tyson, who responds with accurate, insightful, and often humorous commentary about science, the universe, and more.
-- 🧠 **AI-Powered Responses:** Leverages large language models like `llama-3.1-70b-versatile` for dynamic and natural conversations.
+- 🧠 **AI-Powered Responses:** Leverages large language models like Meta's Llama for dynamic and natural conversations.
 - 🚀 **Real-Time Communication:** Displays user messages and responses in an intuitive chat interface.
 - 🔧 **Configurable:** Easily switch AI models by updating the `SubmitInput` method.
 
