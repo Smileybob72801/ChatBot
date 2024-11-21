@@ -1,4 +1,4 @@
-# ChatBot: Neil deGrasse Tyson Edition
+# Chat With Neil
 
 **Chat With Neil** is a web-based application that simulates engaging conversations with Neil deGrasse Tyson, the renowned astrophysicist. Using advanced AI models, the chatbot provides insightful, in-character responses to user inputs.
 
